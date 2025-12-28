@@ -1,5 +1,12 @@
+import { MetersTable } from './components/MatersTable/MetersTable';
+import { GlobalStyles } from './styles/GlobalStyles';
 function App() {
-  return <div></div>;
+  return (
+    <>
+      <GlobalStyles />
+      <MetersTable />
+    </>
+  );
 }
 
 export default App;
