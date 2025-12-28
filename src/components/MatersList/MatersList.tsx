@@ -7,9 +7,11 @@ import {
   TypeBadge,
   TableBody,
   MeterIcon,
+  DeleteIcon,
 } from './MatersList.style';
 import cw from './assets/cw.svg';
 import hw from './assets/hw.svg';
+import deleteIcon from './assets/deleteIcon.svg';
 
 interface MatersListProps {
   metersList: IMeter[];
@@ -51,7 +53,16 @@ export const MatersList = ({ metersList }: MatersListProps) => {
           </TableCell>
           <TableCell $width="146px">{meter.initialValues}</TableCell>
           <TableCell $width="430px">{meter.address}</TableCell>
-          <TableCell $width="376px">{meter.description}</TableCell>
+          <TableCell $width="304px">{meter.description}</TableCell>
+          <TableCell $width="64px">
+            <DeleteIcon
+              src={deleteIcon}
+              alt="Удалить счетчик"
+              $width={40}
+              $height={40}
+              onClick={() => alert('Удалить счетчик?')}
+            />
+          </TableCell>
         </TableRow>
       ))}
     </TableBody>

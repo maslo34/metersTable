@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const TableBody = styled.tbody`
   display: block;
   width: 100%;
-  height: 80vh;
+  height: 75vh;
   overflow-y: auto;
   overflow-x: hidden;
 `;
@@ -19,20 +19,19 @@ export const TableRow = styled.tr`
     background-color: #f7f8f9;
     cursor: pointer;
   }
-
-  &:last-child {
-    border-bottom: none;
-  }
 `;
 
 export const TableCell = styled.td<{ $width?: string }>`
   width: ${(props) => props.$width || 'auto'};
 
-  padding: 12px 16px;
+  padding: 6px 12px;
   font-size: 14px;
   color: #1f2939;
 
-  height: 52px;
+  &:first-child {
+    text-align: center;
+    vertical-align: middle;
+  }
 `;
 
 export const TypeBadge = styled.span`
@@ -60,4 +59,17 @@ export const MeterIcon = styled.img`
   height: 14px;
   object-fit: contain;
   flex-shrink: 0;
+`;
+
+export const DeleteIcon = styled.img<{ $width: number; $height: number }>`
+  width: ${(props) => props.$width};
+  height: ${(props) => props.$height};
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0;
+  visibility: hidden;
+  ${TableRow}:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
 `;
