@@ -13,6 +13,7 @@ export interface IMeter {
 export interface IMeterStore {
   meters: IMeter[];
   numberOfPages: number;
+  currentPage: number;
   isLoading: boolean;
   nextPage: string | null;
   previousPage: string | null;

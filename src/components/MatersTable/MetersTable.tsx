@@ -2,20 +2,26 @@ import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { meterStore } from '../../stores';
 import { MatersList } from '../MatersList';
+import { Pagination } from '../Pagination';
 import {
   Container,
   Title,
   Table,
   TableHeader,
   TableHeaderRow,
+  TabFooter,
   Loading,
   ErrorMessage,
 } from './MetersTable.style';
 
 export const MetersTable = observer(() => {
   useEffect(() => {
-    meterStore.loadMeters({ limit: 20 });
+    meterStore.loadMeters();
   }, []);
+
+  const handleClickPagination = (page: number) => {
+    meterStore.loadMore(page);
+  };
   return (
     <Container>
       <Title>Список счётчиков</Title>
@@ -33,7 +39,19 @@ export const MetersTable = observer(() => {
         </thead>
 
         <MatersList metersList={meterStore.meters} />
+        <TabFooter>
+          <Pagination
+            totalPages={meterStore.numberOfPages}
+            currentPage={meterStore.currentPage}
+            onPageChange={(page) => handleClickPagination(page)}
+          />
+        </TabFooter>
       </Table>
+      {/* <Pagination
+        totalPages={meterStore.numberOfPages}
+        currentPage={meterStore.currentPage}
+        onPageChange={(page) => handleClickPagination(page)}
+      /> */}
       {meterStore.isLoading && <Loading>Загрузка счетчиков...</Loading>}
       {meterStore.error && (
         <ErrorMessage>Ошибка: {meterStore.error}</ErrorMessage>

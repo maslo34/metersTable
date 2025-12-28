@@ -4,12 +4,16 @@ export const Loading = styled.div`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 100px;
+  top: 150px;
   z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 36px;
+  background: #f7f8f9;
+  padding: 8px 12px;
+  border: 1px solid #1f2939;
+  border-radius: 8px;
   color: #666;
   font-size: 16px;
 `;
@@ -74,4 +78,13 @@ export const TableHeader = styled.th<{ $width?: string }>`
   font-weight: 600;
   color: #697180;
   font-size: 13px;
+`;
+
+export const TabFooter = styled.tfoot`
+  padding: 8px 16px;
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;

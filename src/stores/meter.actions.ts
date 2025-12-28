@@ -3,7 +3,11 @@ import { metersApi, type MeterBM } from '../api';
 import type { LoadMetersParams } from './meter.types';
 import { MeterModel } from './meter.model';
 
+const LIMIT_METERS_ON_PAGE = 20;
+const START_PAGE = 1;
+
 export const createMeterActions = (self: any) => {
+  // Загрузка адреса счетчика
   const loadAddress = flow(function* (addressId: string) {
     try {
       const response = yield metersApi.getAddressById(addressId);
@@ -14,20 +18,24 @@ export const createMeterActions = (self: any) => {
     }
   });
 
+  // Загрузка страницы счетчиков
   const loadMeters = flow(function* (params?: LoadMetersParams) {
     self.isLoading = true;
     self.error = null;
 
     try {
       const response = yield metersApi.getMeters(
-        params?.limit || 20,
+        params?.limit || LIMIT_METERS_ON_PAGE,
         params?.offset || 0
       );
 
-      self.numberOfPages = response.count;
+      self.numberOfPages = response.numberOfPages;
       self.nextPage = response.next;
       self.previousPage = response.previous;
-
+      self.currentPage =
+        (Number(new URL(self.nextPage).searchParams.get('offset')) -
+          LIMIT_METERS_ON_PAGE) /
+          LIMIT_METERS_ON_PAGE || START_PAGE;
       const listAddressId = response.data.map(
         (meterData: MeterBM) => meterData.addressId
       );
@@ -48,7 +56,8 @@ export const createMeterActions = (self: any) => {
         (meterData: MeterBM, index: number) =>
           MeterModel.create({
             ...meterData,
-            sequenceNumber: index + 1 + (params?.offset || 0),
+            sequenceNumber:
+              index + 1 + (Number(params?.offset) - LIMIT_METERS_ON_PAGE || 0),
             address: addressMap.get(meterData.addressId) || 'Адрес не загружен',
           })
       );
@@ -62,13 +71,16 @@ export const createMeterActions = (self: any) => {
     }
   });
 
-  const loadMore = flow(function* () {
-    if (!self.nextPage || self.isLoading) return;
-
+  // Загрузка новой страницы счетчиков
+  const loadMore = flow(function* (page = 0) {
+    if (self.isLoading) return;
     try {
       const url = new URL(self.nextPage);
-      const limit = parseInt(url.searchParams.get('limit') || '20');
-      const offset = parseInt(url.searchParams.get('offset') || '0');
+      const limit = parseInt(
+        url.searchParams.get('limit') || String(LIMIT_METERS_ON_PAGE)
+      );
+      const offset =
+        page * 20 || parseInt(url.searchParams.get('offset') || '1');
 
       yield loadMeters({ limit, offset });
     } catch (error) {

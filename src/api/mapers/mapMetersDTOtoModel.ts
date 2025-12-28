@@ -14,7 +14,7 @@ export const mapSingleMeterDTOtoModel = (dto: MetetDTO): MeterBM => {
     initialValues: dto.initial_values[0] || 0,
     addressId: dto.area.id,
     address: '',
-    description: dto.description,
+    description: dto.description || '',
   };
 };
 
@@ -25,8 +25,12 @@ export const mapResponseMetersDTOtoModel = (
     mapSingleMeterDTOtoModel(meterDTO)
   );
   const numberOfPages = dto.count;
+  const next = dto.next;
+  const previous = dto.previous;
   return {
     data,
     numberOfPages,
+    next,
+    previous,
   };
 };

@@ -6,6 +6,7 @@ const MeterStoreBase = types
   .model({
     meters: types.array(MeterModel),
     numberOfPages: types.optional(types.number, 0),
+    currentPage: types.optional(types.number, 0),
     isLoading: types.optional(types.boolean, false),
     nextPage: types.maybeNull(types.string),
     previousPage: types.maybeNull(types.string),

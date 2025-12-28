@@ -35,6 +35,8 @@ export type MeterBM = {
 export type MetersListBM = {
   data: MeterBM[];
   numberOfPages: number;
+  next: string | null;
+  previous: string | null;
 };
 
 export type AreaDTO = {
