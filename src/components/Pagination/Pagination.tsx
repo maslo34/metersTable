@@ -73,22 +73,24 @@ export const Pagination = ({
 
   if (totalPages === 1) return null;
   return (
-    <PaginationWrapp>
-      {visiblePages.map((page) =>
-        page === ELLIPSIS_SYMBOL ? (
-          <PaginationButton key={`ellipsis-${Math.random()}`} disabled>
-            {'...'}
-          </PaginationButton>
-        ) : (
-          <PaginationButton
-            key={page}
-            $isActive={currentPage === page}
-            onClick={() => handlePageClick(page)}
-          >
-            {page}
-          </PaginationButton>
-        )
-      )}
-    </PaginationWrapp>
+    <tr>
+      <PaginationWrapp>
+        {visiblePages.map((page) =>
+          page === ELLIPSIS_SYMBOL ? (
+            <PaginationButton key={`ellipsis-${Math.random()}`} disabled>
+              {'...'}
+            </PaginationButton>
+          ) : (
+            <PaginationButton
+              key={page}
+              $isActive={currentPage === page}
+              onClick={() => handlePageClick(page)}
+            >
+              {page}
+            </PaginationButton>
+          )
+        )}
+      </PaginationWrapp>
+    </tr>
   );
 };

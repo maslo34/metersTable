@@ -10,7 +10,7 @@ export const PaginationButton = styled.button<{ $isActive?: boolean }>`
   color: #1f2939;
 `;
 
-export const PaginationWrapp = styled.div`
+export const PaginationWrapp = styled.td`
   display: flex;
   gap: 10px;
 `;
