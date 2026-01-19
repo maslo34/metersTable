@@ -47,11 +47,6 @@ export const MetersTable = observer(() => {
           />
         </TabFooter>
       </Table>
-      {/* <Pagination
-        totalPages={meterStore.numberOfPages}
-        currentPage={meterStore.currentPage}
-        onPageChange={(page) => handleClickPagination(page)}
-      /> */}
       {meterStore.isLoading && <Loading>Загрузка счетчиков...</Loading>}
       {meterStore.error && (
         <ErrorMessage>Ошибка: {meterStore.error}</ErrorMessage>

@@ -26,6 +26,7 @@ export const TableCell = styled.td<{ $width?: string }>`
 
   padding: 6px 12px;
   font-size: 14px;
+  font-weight: 400;
   color: #1f2939;
 
   &:first-child {

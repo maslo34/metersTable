@@ -75,7 +75,7 @@ export const TableHeader = styled.th<{ $width?: string }>`
   width: ${(props) => props.$width || 'auto'};
   padding: 8px 12px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 500;
   color: #697180;
   font-size: 13px;
 `;
