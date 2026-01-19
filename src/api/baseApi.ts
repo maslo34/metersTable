@@ -16,4 +16,8 @@ export const metersApi = {
     const response = await apiClient.get<AreaDTO>(`areas/?id=${id}`);
     return mapResponseAreaDTOtoModel(response.data);
   },
+  deleteMeterId: async (id: string) => {
+    const response = await apiClient.delete(`meters/${id}/`);
+    return response.data;
+  },
 };

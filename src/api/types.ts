@@ -6,7 +6,7 @@ export type MetetDTO = {
   };
   is_automatic: null;
   communication: string;
-  description: string;
+  description: string | null;
   serial_number: string;
   installation_date: Date;
   brand_name: null | string;
