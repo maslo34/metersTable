@@ -18,7 +18,6 @@ export const MetersTable = observer(() => {
   useEffect(() => {
     meterStore.loadMeters();
   }, []);
-
   const handleClickPagination = (page: number) => {
     meterStore.loadMore(page);
   };

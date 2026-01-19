@@ -62,7 +62,10 @@ export const MeterIcon = styled.img`
   flex-shrink: 0;
 `;
 
-export const DeleteIcon = styled.img<{ $width: number; $height: number }>`
+export const DeleteIcon = styled.img<{
+  $width: number;
+  $height: number;
+}>`
   width: ${(props) => props.$width};
   height: ${(props) => props.$height};
   object-fit: contain;

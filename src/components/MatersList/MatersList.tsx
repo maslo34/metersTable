@@ -1,6 +1,8 @@
 import { formatDate } from '../../utils/dateFormatter';
 import { type IMeter } from '../../stores';
 
+import { meterStore } from '../../stores';
+
 import {
   TableRow,
   TableCell,
@@ -18,6 +20,11 @@ interface MatersListProps {
 }
 
 export const MatersList = ({ metersList }: MatersListProps) => {
+  const handleDeleteMeter = (id: string): void => {
+    if (!meterStore.isLoading) {
+      meterStore.deleteMeter(id);
+    }
+  };
   const getMeterType = (type: string) => {
     switch (type) {
       case 'ColdWaterAreaMeter':
@@ -39,32 +46,39 @@ export const MatersList = ({ metersList }: MatersListProps) => {
 
   return (
     <TableBody>
-      {metersList.map((meter: IMeter) => (
-        <TableRow key={meter.id}>
-          <TableCell $width="48px">{meter.sequenceNumber}</TableCell>
-          <TableCell $width="120px">
-            <TypeBadge>{getMeterType(meter.type)}</TypeBadge>
-          </TableCell>
-          <TableCell $width="160px">
-            {formatDate(meter.installationDate)}
-          </TableCell>
-          <TableCell $width="128px">
-            {meter.isAutomatic ? 'Да' : 'Нет'}
-          </TableCell>
-          <TableCell $width="146px">{meter.initialValues}</TableCell>
-          <TableCell $width="430px">{meter.address}</TableCell>
-          <TableCell $width="304px">{meter.description}</TableCell>
-          <TableCell $width="64px">
-            <DeleteIcon
-              src={deleteIcon}
-              alt="Удалить счетчик"
-              $width={40}
-              $height={40}
-              onClick={() => alert('Удалить счетчик?')}
-            />
-          </TableCell>
-        </TableRow>
-      ))}
+      {metersList.map(
+        ({
+          id,
+          sequenceNumber,
+          type,
+          installationDate,
+          isAutomatic,
+          initialValues,
+          address,
+          description,
+        }: IMeter) => (
+          <TableRow key={id}>
+            <TableCell $width="48px">{sequenceNumber}</TableCell>
+            <TableCell $width="120px">
+              <TypeBadge>{getMeterType(type)}</TypeBadge>
+            </TableCell>
+            <TableCell $width="160px">{formatDate(installationDate)}</TableCell>
+            <TableCell $width="128px">{isAutomatic ? 'Да' : 'Нет'}</TableCell>
+            <TableCell $width="146px">{initialValues}</TableCell>
+            <TableCell $width="430px">{address}</TableCell>
+            <TableCell $width="304px">{description}</TableCell>
+            <TableCell $width="64px">
+              <DeleteIcon
+                src={deleteIcon}
+                alt="Удалить счетчик"
+                $width={40}
+                $height={40}
+                onClick={() => handleDeleteMeter(id)}
+              />
+            </TableCell>
+          </TableRow>
+        )
+      )}
     </TableBody>
   );
 };

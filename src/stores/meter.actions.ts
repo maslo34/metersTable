@@ -88,6 +88,19 @@ export const createMeterActions = (self: any) => {
     }
   });
 
+  // Удаление счетчика
+  const deleteMeter = flow(function* (id: string) {
+    try {
+      yield metersApi.deleteMeterId(id);
+      const limit = LIMIT_METERS_ON_PAGE;
+      const offset = self.currentPage * LIMIT_METERS_ON_PAGE;
+
+      yield loadMeters({ limit, offset });
+    } catch (error) {
+      console.error('Ошибка удаления счетчика', error);
+    }
+  });
+
   const clearStore = () => {
     self.meters.clear();
     self.numberOfPages = 0;
@@ -100,5 +113,6 @@ export const createMeterActions = (self: any) => {
     loadMeters,
     loadMore,
     clearStore,
+    deleteMeter,
   };
 };
